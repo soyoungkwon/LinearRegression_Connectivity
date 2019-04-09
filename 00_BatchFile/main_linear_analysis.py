@@ -21,6 +21,8 @@ import glob
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import pylab
+import csv
+from scipy.stats import ttest_1samp
 # import load_data_group
 
 # import basic_param_call
@@ -235,6 +237,22 @@ def barplot_gain_base(gain_subj, base_subj, indx, fig_name, fig_save):
     plt.show()
     if fig_save: fig.savefig(fig_name)
 
+def linear_coef(gain, base):
+    # 3.2. linear parameters save
+    linear_name = ['Gain Rest', 'Base Rest', 'Gain Atten', 'Base Atten']
+    dxn_name = []
+    for d_name in DXN_Name:
+        for hemi in ['L', 'R']:
+            dxn_name += [d_name + hemi]
+
+    linear_data = np.zeros([20,8,4])
+    linear_data[:,:,0]=(gain['corrRest'])#[np.newaxis][0]
+    linear_data[:,:,1]=(base['corrRest'])#[np.newaxis][0]
+    linear_data[:,:,2]=(gain['corrAtten'])#[np.newaxis][0]
+    linear_data[:,:,3]=(base['corrAtten'])#[np.newaxis][0]
+    np.save("linear_3d.npy", linear_data)
+    return linear_data
+
 def main():
     # 1. load conn data
     conn_group = load_data_group(dir_connectivity, filetype)
@@ -250,11 +268,12 @@ def main():
     linear_result = linear_regression(X, Y, DXN_Name)
     gain, base = combine_linear_regress(linear_result)
 
-    print('Gain during vision: ', mean(gain['corrRest'], axis=0))
-    print('Base during vision: ', mean(base['corrRest'], axis=0))
+    linear_param = linear_coef(gain, base)
+    
+    # # save pandas series
+    # linear_param.to_csv("linear_param.csv", sep="\t", float_format="%.5f")
+    # linear_param.to_excel("linear_param.xlsx", engine= "xlsxwriter")
 
-    print('Gain during attention: ', mean(gain['corrAtten'], axis=0))
-    print('Base during attention: ', mean(base['corrAtten'], axis=0))
 
     # 4. Visualize linear fit & 5. Gain-Base
     # DAN-VIS
