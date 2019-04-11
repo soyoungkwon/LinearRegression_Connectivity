@@ -13,4 +13,4 @@ A linear regression analysis is applied to check whether visual network (VIS) an
  4. Visualize the Linear Regression plot
  5. Visualize the Gain, Base (as a bar plot)
  
-
+code written by Soyoung Kwon
