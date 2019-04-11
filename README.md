@@ -10,3 +10,5 @@ A linear regression analysis is applied to check whether visual network (VIS) an
  3. Linear regression fit : gain, base will be obtained
  4. Visualize the Linear Regression plot
  5. Visualize the Gain, Base (as a bar plot)
+ 
+ In preparation for "Multiplicative and Additive modulation of the connectivity by attention". (Soyoung Kwon and Andreas Bartels)
